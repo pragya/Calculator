@@ -1,0 +1,64 @@
+<?xml version = "1.0"?>
+<project name="Calculator" default="runjUnit" basedir=".">
+    <property name = "project.name" value="Calculator" />
+    <property name = "main.name" value="CalculatorApplication" />
+    <property name = "package.name" value="com.tw.calculator" />
+
+    <target name="clean" description="clean previous output directory">
+        <!--<delete dir="out/src"/>-->
+        <!--<delete dir="out/test"/>-->
+        <delete dir="out"/>
+    </target>
+
+    <target name="build" depends="clean">
+        <mkdir dir="out"/>
+        <!--<mkdir dir="out/src"/>-->
+        <!--<mkdir dir="out/test"/>-->
+        <!--<javac destdir="out/src" srcdir="src"/>-->
+        <javac destdir="out">
+            <src path="src;test"/>
+            <classpath location="lib/junit-4.12.jar"/>
+            <classpath location="lib/mockito-all-1.9.5.jar"/>
+            <classpath location="lib/hamcrest-core-1.3.jar"/>
+            <classpath location="lib/system-rules-1.12.0.jar"/>
+        </javac>
+    </target>
+
+    <target name="runjUnit" depends="build">
+        <junit printsummary="yes" haltonfailure="true">
+            <classpath>
+                <pathelement location="lib/junit-4.12.jar"/>
+                <pathelement location="lib/hamcrest-core-1.3.jar"/>
+                <pathelement location="lib/mockito-all-1.9.5.jar"/>
+                <pathelement location="lib/system-rules-1.12.0.jar"/>
+                <pathelement location="out"/>
+            </classpath>
+
+            <batchtest fork="yes">
+                <fileset dir="test">
+                    <include name="**/*Test*.java"/>
+                </fileset>
+                <formatter type="plain" usefile="false"/>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="build-jar" depends="build">
+        <jar destfile="lib/${project.name}.jar"
+             basedir="out/src"
+             excludes="**/Test.class">
+            <manifest>
+                <attribute name="Main-Class" value="${package.name}.main.${main.name}"/>
+            </manifest>
+
+        </jar>
+    </target>
+
+    <target name="run" depends="build-jar">
+        <java fork="true" failonerror="yes" classname="${package.name}.main.${main.name}">
+            <classpath>
+                <path location="lib/${project.name}.jar"/>
+            </classpath>
+        </java>
+    </target>
+</project>
