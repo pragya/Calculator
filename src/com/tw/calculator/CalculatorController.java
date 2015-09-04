@@ -13,11 +13,12 @@ public class CalculatorController {
     }
 
     public void start() {
-//        while(true) {
+        while(true) {
             String input = view.readInput();
             Command command = parser.parse(input);
+            command.addToHistory();
             command.execute();
             view.printResult(calculator.getAccumulator());
-//        }
+        }
     }
 }

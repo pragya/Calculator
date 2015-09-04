@@ -10,9 +10,20 @@ public class DivideCommandTest {
     @Test
     public void shouldExecuteAddOnCalculator() {
         Calculator calculator = mock(Calculator.class);
-        DivideCommand divideCommand = new DivideCommand(calculator, 5);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        DivideCommand divideCommand = new DivideCommand(calculator, commandHistory, 5);
 
         divideCommand.execute();
         verify(calculator).divide(5);
+    }
+
+    @Test
+    public void shouldAddCommandToHistory() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        DivideCommand divideCommand = new DivideCommand(calculator, commandHistory, 5);
+
+        divideCommand.addToHistory();
+        verify(commandHistory).add(divideCommand);
     }
 }

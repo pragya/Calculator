@@ -9,7 +9,8 @@ public class NullCommandTest {
     @Test
     public void shouldExecuteAddOnCalculator() {
         Calculator calculator = mock(Calculator.class);
-        NullCommand nullCommand = new NullCommand(calculator, 5);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        NullCommand nullCommand = new NullCommand(calculator, commandHistory, 5);
 
         nullCommand.execute();
         verifyZeroInteractions(calculator);

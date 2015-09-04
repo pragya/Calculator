@@ -10,9 +10,20 @@ public class CancelCommandTest {
     @Test
     public void shouldExecuteAddOnCalculator() {
         Calculator calculator = mock(Calculator.class);
-        CancelCommand cancelCommand = new CancelCommand(calculator, 0);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        CancelCommand cancelCommand = new CancelCommand(calculator, commandHistory, 0);
 
         cancelCommand.execute();
         verify(calculator).cancel(0);
+    }
+
+    @Test
+    public void shouldAddCommandToHistory() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        CancelCommand cancelCommand = new CancelCommand(calculator, commandHistory, 0);
+
+        cancelCommand.addToHistory();
+        verify(commandHistory).add(cancelCommand);
     }
 }

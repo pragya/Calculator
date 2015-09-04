@@ -10,7 +10,8 @@ public class ExitCommandTest {
     @Test
     public void shouldExecuteAddOnCalculator() {
         Calculator calculator = mock(Calculator.class);
-        ExitCommand exitCommand = new ExitCommand(calculator, 0);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        ExitCommand exitCommand = new ExitCommand(calculator, commandHistory, 0);
 
         exitCommand.execute();
         verify(calculator).exit(0);

@@ -2,10 +2,12 @@ package com.tw.calculator;
 
 public class Parser {
 
+    private CommandHistory commandHistory;
     private Calculator calculator;
 
-    public Parser(Calculator calculator) {
+    public Parser(Calculator calculator, CommandHistory commandHistory) {
         this.calculator = calculator;
+        this.commandHistory = commandHistory;
     }
 
     public Command parse(String inputString) {
@@ -13,7 +15,7 @@ public class Parser {
         float value = getValue(tokens);
 
         if(tokens.length > 2) {
-            return new NullCommand(calculator, value);
+            return new NullCommand(calculator, commandHistory, value);
         }
 
         return getCommand(tokens[0], value);
@@ -30,19 +32,21 @@ public class Parser {
     private Command getCommand(String command, float value) {
         switch (command) {
             case "add" :
-                return new AddCommand(calculator, value);
+                return new AddCommand(calculator, commandHistory, value);
             case "subtract" :
-                return new SubtractCommand(calculator, value);
+                return new SubtractCommand(calculator, commandHistory, value);
             case "multiply" :
-                return new MultiplyCommand(calculator, value);
+                return new MultiplyCommand(calculator, commandHistory, value);
             case "divide" :
-                return new DivideCommand(calculator, value);
+                return new DivideCommand(calculator, commandHistory, value);
             case "cancel" :
-                return new CancelCommand(calculator, value);
+                return new CancelCommand(calculator, commandHistory, value);
             case "exit" :
-                return new ExitCommand(calculator, value);
+                return new ExitCommand(calculator, commandHistory, value);
+            case "repeat" :
+                return new RepeatCommand(calculator, commandHistory, value);
             default:
-                return new NullCommand(calculator, value);
+                return new NullCommand(calculator, commandHistory,value);
         }
     }
 }

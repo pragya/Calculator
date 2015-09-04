@@ -10,9 +10,20 @@ public class MultiplyCommandTest {
     @Test
     public void shouldExecuteAddOnCalculator() {
         Calculator calculator = mock(Calculator.class);
-        MultiplyCommand multiplyCommand = new MultiplyCommand(calculator, 5);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        MultiplyCommand multiplyCommand = new MultiplyCommand(calculator, commandHistory, 5);
 
         multiplyCommand.execute();
         verify(calculator).multiply(5);
+    }
+
+    @Test
+    public void shouldAddCommandToHistory() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        MultiplyCommand multiplyCommand = new MultiplyCommand(calculator, commandHistory, 5);
+
+        multiplyCommand.addToHistory();
+        verify(commandHistory).add(multiplyCommand);
     }
 }
