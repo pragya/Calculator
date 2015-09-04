@@ -79,4 +79,14 @@ public class ParserTest {
         NullCommand nullCommand = new NullCommand(calculator, 0);
         assertEquals(nullCommand.getClass(), command.getClass());
     }
+
+    @Test
+    public void shouldParseAGivenStringAndIfStringIsNotValidReturnNullCommand() {
+        Calculator calculator = mock(Calculator.class);
+        Parser parser = new Parser(calculator);
+
+        Command command = parser.parse("add invalid command");
+        NullCommand nullCommand = new NullCommand(calculator, 0);
+        assertEquals(nullCommand.getClass(), command.getClass());
+    }
 }

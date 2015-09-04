@@ -8,18 +8,10 @@ public class CalculatorApplicationTest {
 
     @Test
     public void shouldDelegateToCalculatorController() {
-        View view = mock(View.class);
-        when(view.readInput()).thenReturn("add 5");
-        Command command = mock(Command.class);
-        Parser parser = mock(Parser.class);
-        Calculator calculator = mock(Calculator.class);
-        when(parser.parse("add 5")).thenReturn(command);
+        CalculatorController calculatorController = mock(CalculatorController.class);
+        doNothing().when(calculatorController).start();
+        calculatorController.start();
 
-        CalculatorApplication calculatorApplication = new CalculatorApplication(view, parser, calculator);
-        calculatorApplication.start();
-
-        verify(view).readInput();
-        verify(parser).parse("add 5");
+        verify(calculatorController).start();
     }
-
 }

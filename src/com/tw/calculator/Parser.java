@@ -10,16 +10,21 @@ public class Parser {
 
     public Command parse(String inputString) {
         String[] tokens = inputString.split(" ");
-        float value;
-        //TODO handle command validations ie add 5 3 should return nullcommand etc
+        float value = getValue(tokens);
 
-        try {
-            value = Float.parseFloat(tokens[1]);
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-            value = 0;
+        if(tokens.length > 2) {
+            return new NullCommand(calculator, value);
         }
-      
+
         return getCommand(tokens[0], value);
+    }
+
+    private float getValue(String[] tokens) {
+        try {
+            return Float.parseFloat(tokens[1]);
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            return 0;
+        }
     }
 
     private Command getCommand(String command, float value) {

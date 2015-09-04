@@ -1,10 +1,14 @@
 package com.tw.calculator;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import static org.junit.Assert.*;
 
 public class CalculatorTest {
+    @Rule
+    public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
     @Test
     public void shouldAddToGivenValueOfAccumulator() {
@@ -76,10 +80,10 @@ public class CalculatorTest {
         assertEquals(calculator.getAccumulator(), 0, 0.0000);
     }
 
-//    @Test
-//    // TODO
-//    public void shouldExitTheProgram() {
-//        Calculator calculator = new Calculator();
-//        calculator.exit(0);
-//    }
+    @Test
+    public void shouldExitTheProgram() {
+        exit.expectSystemExitWithStatus(0);
+        Calculator calculator = new Calculator();
+        calculator.exit(0);
+    }
 }
