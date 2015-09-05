@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 public class RepeatCommandTest {
 
     @Test
-    public void shouldExecuteAllRepeatedCommandsOnCalculator() {
+    public void shouldExecuteAllRepeatedCommaCalculator() {
         Calculator calculator = mock(Calculator.class);
         CommandHistory commandHistory = mock(CommandHistory.class);
         Command command = mock(Command.class);

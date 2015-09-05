@@ -11,7 +11,7 @@ public class CalculatorTest {
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
     @Test
-    public void shouldAddToGivenValueOfAccumulator() {
+    public void shouldAddToAccumulatorValueWhichIsZeroAndResultInThatNumber() {
         Calculator calculator = new Calculator();
         calculator.add(5);
         assertEquals(calculator.getAccumulator(), 5, 0.0000);
@@ -25,7 +25,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldSubtractFromGivenValueOfAccumulator() {
+    public void shouldSubtractFromAccumulatorValueWhichIsZeroAndResultNegativeNumber() {
         Calculator calculator = new Calculator();
         calculator.subtract(5);
         assertEquals(calculator.getAccumulator(), -5, 0.0000);
@@ -39,7 +39,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldMuliplyToGivenValueOfAccumulator() {
+    public void shouldMultiplyAccumulatorValueWhichIsZeroAndResultZero() {
         Calculator calculator = new Calculator();
         calculator.multiply(5);
         assertEquals(calculator.getAccumulator(), 0, 0.0000);
@@ -60,7 +60,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void shouldDivideGivenValueOfAccumulator() {
+    public void shouldDivideAccumulatorValueWhichIsZeroAndResultZero() {
         Calculator calculator = new Calculator();
         calculator.divide(5);
         assertEquals(calculator.getAccumulator(), 0, 0.0000);
@@ -71,6 +71,41 @@ public class CalculatorTest {
         Calculator calculator = new Calculator(10);
         calculator.divide(5);
         assertEquals(calculator.getAccumulator(), 2, 0.0000);
+    }
+
+    @Test
+    public void shouldSquarePreviousValueOfAccumulator() {
+        Calculator calculator = new Calculator(2);
+        calculator.sqr(0);
+        assertEquals(calculator.getAccumulator(), 4.0, 0.0000);
+    }
+
+    @Test
+    public void shouldSquareRootPreviousValueOfAccumulator() {
+        Calculator calculator = new Calculator(25);
+        calculator.sqrt(0);
+        assertEquals(calculator.getAccumulator(), 5.0, 0.0000);
+    }
+
+    @Test
+    public void shouldReturnNegativePreviousValueOfAccumulator() {
+        Calculator calculator = new Calculator(25);
+        calculator.neg(0);
+        assertEquals(calculator.getAccumulator(), -25.0, 0.0000);
+    }
+
+    @Test
+    public void shouldReturnPositiveValueIfPreviousValueOfAccumulatorIsNegative() {
+        Calculator calculator = new Calculator(-25);
+        calculator.neg(0);
+        assertEquals(calculator.getAccumulator(), 25.0, 0.0000);
+    }
+
+    @Test
+    public void shouldReturnPositiveValueAccumulator() {
+        Calculator calculator = new Calculator(-25);
+        calculator.abs(0);
+        assertEquals(calculator.getAccumulator(), 25.0, 0.0000);
     }
 
     @Test

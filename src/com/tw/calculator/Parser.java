@@ -43,6 +43,14 @@ public class Parser {
                 return new CancelCommand(calculator, commandHistory, value);
             case "exit" :
                 return new ExitCommand(calculator, commandHistory, value);
+            case "sqr" :
+                return new SquareCommand(calculator, commandHistory, value);
+            case "sqrt" :
+                return new SquareRootCommand(calculator, commandHistory, value);
+            case "neg" :
+                return new NegativeCommand(calculator, commandHistory, value);
+            case "abs" :
+                return new AbsoluteCommand(calculator, commandHistory, value);
             case "repeat" :
                 return new RepeatCommand(calculator, commandHistory, value);
             default:

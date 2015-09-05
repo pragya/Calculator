@@ -29,6 +29,22 @@ public class Calculator {
             accumulator /= operand;
     }
 
+    public void sqr(float operand) {
+        accumulator *= accumulator;
+    }
+
+    public void sqrt(float operand) {
+        accumulator = (float) Math.sqrt(accumulator);
+    }
+
+    public void neg(float operand) {
+        accumulator = -accumulator;
+    }
+
+    public void abs(float operand) {
+        accumulator = Math.abs(accumulator);
+    }
+
     public void cancel(float operand) {
         accumulator = 0;
     }
@@ -40,6 +56,4 @@ public class Calculator {
     public float getAccumulator() {
         return accumulator;
     }
-
-
 }

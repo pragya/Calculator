@@ -108,4 +108,48 @@ public class ParserTest {
         RepeatCommand repeatCommand = new RepeatCommand(calculator, commandHistory, 0);
         assertEquals(repeatCommand.getClass(), command.getClass());
     }
+
+    @Test
+    public void shouldParseAGivenStringAndReturnSquareCommand() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        Parser parser = new Parser(calculator, commandHistory);
+
+        Command command = parser.parse("sqr");
+        SquareCommand squareCommand = new SquareCommand(calculator, commandHistory, 0);
+        assertEquals(squareCommand.getClass(), command.getClass());
+    }
+
+    @Test
+    public void shouldParseAGivenStringAndReturnSquareRootCommand() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        Parser parser = new Parser(calculator, commandHistory);
+
+        Command command = parser.parse("sqrt");
+        SquareRootCommand squareRootCommand = new SquareRootCommand(calculator, commandHistory, 0);
+        assertEquals(squareRootCommand.getClass(), command.getClass());
+    }
+
+    @Test
+    public void shouldParseAGivenStringAndReturnNegativeCommand() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        Parser parser = new Parser(calculator, commandHistory);
+
+        Command command = parser.parse("neg");
+        NegativeCommand negativeCommand = new NegativeCommand(calculator, commandHistory, 0);
+        assertEquals(negativeCommand.getClass(), command.getClass());
+    }
+
+    @Test
+    public void shouldParseAGivenStringAndReturnAbsoluteCommand() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        Parser parser = new Parser(calculator, commandHistory);
+
+        Command command = parser.parse("abs");
+        AbsoluteCommand absoluteCommand = new AbsoluteCommand(calculator, commandHistory, 0);
+        assertEquals(absoluteCommand.getClass(), command.getClass());
+    }
 }
