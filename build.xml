@@ -5,16 +5,11 @@
     <property name = "package.name" value="com.tw.calculator" />
 
     <target name="clean" description="clean previous output directory">
-        <!--<delete dir="out/src"/>-->
-        <!--<delete dir="out/test"/>-->
         <delete dir="out"/>
     </target>
 
     <target name="build" depends="clean">
         <mkdir dir="out"/>
-        <!--<mkdir dir="out/src"/>-->
-        <!--<mkdir dir="out/test"/>-->
-        <!--<javac destdir="out/src" srcdir="src"/>-->
         <javac destdir="out">
             <src path="src;test"/>
             <classpath location="lib/junit-4.12.jar"/>
@@ -45,17 +40,17 @@
 
     <target name="build-jar" depends="build">
         <jar destfile="lib/${project.name}.jar"
-             basedir="out/src"
+             basedir="out"
              excludes="**/Test.class">
             <manifest>
-                <attribute name="Main-Class" value="${package.name}.main.${main.name}"/>
+                <attribute name="Main-Class" value="${package.name}.${main.name}"/>
             </manifest>
 
         </jar>
     </target>
 
     <target name="run" depends="build-jar">
-        <java fork="true" failonerror="yes" classname="${package.name}.main.${main.name}">
+        <java fork="true" failonerror="yes" classname="${package.name}.${main.name}">
             <classpath>
                 <path location="lib/${project.name}.jar"/>
             </classpath>
