@@ -1,8 +1,30 @@
 <?xml version = "1.0"?>
 <project name="Calculator" default="runjUnit" basedir=".">
-    <property name = "project.name" value="Calculator" />
-    <property name = "main.name" value="CalculatorApplication" />
-    <property name = "package.name" value="com.tw.calculator" />
+    <property name="project.name" value="Calculator"/>
+    <property name="main.name" value="CalculatorApplication"/>
+    <property name="package.name" value="com.tw.calculator"/>
+    <property name="cobertura.dir" value="lib/cobertura-2.1.1" />
+
+    <path id="cobertura.classpath">
+        <fileset dir="${cobertura.dir}">
+            <include name="cobertura*.jar" />
+            <include name="lib/**/*.jar" />
+        </fileset>
+    </path>
+
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+
+    <target name="instrument" depends="build">
+        <delete file="cobertura.ser" />
+        <mkdir dir="out/instrumented"/>
+        <cobertura-instrument todir="out/instrumented">
+            <ignore regex="org.apache.log4j.*" />
+            <fileset dir="out/">
+                <include name="**/*.class" />
+                <exclude name="**/*Test.class" />
+            </fileset>
+        </cobertura-instrument>
+    </target>
 
     <target name="clean" description="clean previous output directory">
         <delete dir="out"/>
@@ -10,7 +32,7 @@
 
     <target name="build" depends="clean">
         <mkdir dir="out"/>
-        <javac destdir="out">
+        <javac destdir="out" debug="true">
             <src path="src;test"/>
             <classpath location="lib/junit-4.12.jar"/>
             <classpath location="lib/mockito-all-1.9.5.jar"/>
@@ -19,23 +41,39 @@
         </javac>
     </target>
 
-    <target name="runjUnit" depends="build">
-        <junit printsummary="yes" haltonfailure="true">
+    <target name="runjUnit" depends="instrument">
+        <junit fork="yes" printsummary="yes" haltonfailure="true">
+            <sysproperty key="net.sourceforge.cobertura.datafile"
+                         file="cobertura.ser" />
+
+            <classpath location="out/instrumented" />
             <classpath>
                 <pathelement location="lib/junit-4.12.jar"/>
                 <pathelement location="lib/hamcrest-core-1.3.jar"/>
                 <pathelement location="lib/mockito-all-1.9.5.jar"/>
                 <pathelement location="lib/system-rules-1.12.0.jar"/>
-                <pathelement location="out"/>
+                <pathelement location="out/"/>
             </classpath>
 
+            <classpath refid="cobertura.classpath" />
+
+            <formatter type="xml" />
             <batchtest fork="yes">
-                <fileset dir="test">
+                <fileset dir="test/">
                     <include name="**/*Test*.java"/>
                 </fileset>
                 <formatter type="plain" usefile="false"/>
             </batchtest>
         </junit>
+    </target>
+
+    <target name="coverageReport" depends="runjUnit">
+        <mkdir dir="out/coverage"/>
+        <cobertura-report format="html" destdir="out/coverage" >
+            <fileset dir="src/">
+                <include name="**/*.java" />
+            </fileset>
+        </cobertura-report>
     </target>
 
     <target name="build-jar" depends="build">
@@ -45,7 +83,6 @@
             <manifest>
                 <attribute name="Main-Class" value="${package.name}.${main.name}"/>
             </manifest>
-
         </jar>
     </target>
 

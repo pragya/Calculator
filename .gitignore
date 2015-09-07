@@ -3,3 +3,5 @@ out/
 *.iml
 .DS_Store
 lib/Calculator.jar
+TEST*
+cobertura.ser
