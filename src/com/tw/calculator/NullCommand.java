@@ -17,6 +17,6 @@ public class NullCommand implements Command {
     }
 
     public void addToHistory() {
-        //do nothing
+        commandHistory.add(this);
     }
 }

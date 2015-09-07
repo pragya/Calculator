@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 public class RepeatCommandTest {
 
     @Test
-    public void shouldExecuteAllRepeatedCommaCalculator() {
+    public void shouldExecuteAllRepeatedCommandOnCalculator() {
         Calculator calculator = mock(Calculator.class);
         CommandHistory commandHistory = mock(CommandHistory.class);
         Command command = mock(Command.class);
@@ -22,5 +22,15 @@ public class RepeatCommandTest {
 
         verify(commandHistory).getLastNCommand(2);
         verify(command, times(2)).execute();
+    }
+
+    @Test
+    public void shouldAddNothingOnHistory() {
+        Calculator calculator = mock(Calculator.class);
+        CommandHistory commandHistory = mock(CommandHistory.class);
+        RepeatCommand repeatCommand = new RepeatCommand(calculator, commandHistory, 2);
+
+        repeatCommand.addToHistory();
+        verifyZeroInteractions(commandHistory);
     }
 }
